@@ -5,3 +5,4 @@ import re
 import datetime as dt
 
 data = pd.read_csv('C://Users//wyzdw//Desktop//data2.csv', index_col=['类型', 'ID', '日期'])
+usvlvfdgjdhbsrldghjkr
