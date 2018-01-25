@@ -2,6 +2,7 @@ import re
 import numpy as np
 import pandas as pd
 from pandas import DataFrame, Series
+import matplotlib.pyplot as plt
 
 data = data.drop(['户名', '户号', '地址', '工程期数'])      #删除dataframe列
 
