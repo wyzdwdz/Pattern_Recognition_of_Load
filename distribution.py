@@ -18,3 +18,4 @@ for a, b, c in list(data.index.values):
     else:
         b_list.append(b)
         
+data = data.fillna(method = 'bfill')
