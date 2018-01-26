@@ -4,7 +4,7 @@ import pandas as pd
 from pandas import DataFrame, Series
 import matplotlib.pyplot as plt
 
-data = data.drop(['户名', '户号', '地址', '工程期数'])      #删除dataframe列
+data = data.drop(['户名', '户号', '地址', '工程期数'], axis=1)      #删除dataframe列
 
 regex = re.compile('[0-9]')
 data['地址码'] = data['地址码'].replace(regex, '')         #将"地址码"中元素的数字删除
