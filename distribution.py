@@ -19,3 +19,8 @@ for a, b, c in list(data.index.values):
         b_list.append(b)
         
 data = data.fillna(method = 'bfill')
+
+temp = DataFrame()
+for i in range(2003, 2008):
+    temp = temp.append(data2.loc['非工业'].loc['H00569'].loc[(str(i)+'-03-01'):(str(i)+'-05-31')])
+temp.T.plot(style='k.--', legend=False)
