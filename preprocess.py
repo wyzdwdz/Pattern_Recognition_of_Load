@@ -13,8 +13,8 @@ data2 = DataFrame()
 data2 = data.sort_values(by=['ID', '日期'])           
 data2['日期'] = pd.to_datetime(data2['日期'], format='%Y-%m-%d %H:%M:%S')     #将日期改为datetime格式
 data2.rename(columns={'地址码':'类型'}, inplace=True)
-columns = data2.columns.tolist()
 
+columns = data2.columns.tolist()
 i = columns.index('ID')
 j = columns.index('类型')
 columns[i], columns[j] = columns[j], columns[i]
