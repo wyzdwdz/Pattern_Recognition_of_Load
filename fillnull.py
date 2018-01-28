@@ -3,27 +3,28 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame, Series
 
-def fillnull(array):
-    array = np.where(array > 0, array, np.nan)
+def fillnull(array):                             #用三次权重比值法填补nan值
+    array = np.where(array > 0, array, np.nan)   #将array中小于等于0的值赋为nan
 
-    mean = np.nanmean(array, axis=0)
+    mean = np.nanmean(array, axis=0)             #求每列平均值（忽略nan）
 
-    array_null = np.isnan(array)
-    x_list, y_list = np.where(array_null)
+    array_null = np.isnan(array)                 
+    x_list, y_list = np.where(array_null)        #找出nan的位置，传回由x_list, y_list数组标志nan的位置
 
     df_array = DataFrame(array)
-    array_temp = df_array.fillna(df_array.mean())
+    array_temp = df_array.fillna(df_array.mean())   #array_temp中null值用该列的平均值代替
     array_temp = array_temp.T
 
     Weights = 1. / 3.
-
+    
+    #使用三次权重比值法
     for i in range(len(x_list)):
         x = x_list[i]
         y = y_list[i]
-        if mean[y] == np.nan:
+        if mean[y] == np.nan:                       #排除全nan的情况
             continue
-        elif y_list[i] in [0, 1, 94, 95]:
-            array[x][y] = array_temp[x][y]
+        elif y_list[i] in [0, 1, 94, 95]:           #排除前后两列和首末排
+            array[x][y] = array_temp[x][y]  
         elif x_list[i] in [0, array.shape[0]-1]:
             array[x][y] = array_temp[x][y]
         elif np.nan in [array_temp[x + 1][y], array_temp[x - 1][y], array_temp[x][y + 1], array_temp[x][y - 1]]:
