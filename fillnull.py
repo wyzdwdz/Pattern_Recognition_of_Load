@@ -25,21 +25,21 @@ def fillnull(array):                             #用三次权重比值法填补
             continue
         elif y_list[i] in [0, 1, 94, 95]:           #排除前后两列和首末排
             array[x][y] = array_temp[x][y]  
-        elif x_list[i] in [0, array.shape[0]-1]:
+        elif x_list[i] in [0, array.shape[0]-1]:    #排除第一行和最后一行
             array[x][y] = array_temp[x][y]
-        elif np.nan in [array_temp[x + 1][y], array_temp[x - 1][y], array_temp[x][y + 1], array_temp[x][y - 1]]:
+        elif np.nan in [array_temp[x + 1][y], array_temp[x - 1][y], array_temp[x][y + 1], array_temp[x][y - 1]]:      #排除四周全为nan的情况
             array[x][y] = array_temp[x][y]
-        else:
+        else:                                       #第一次填充
             array[x][y] = 0.5 * (Weights * (array_temp[x + 1][y] + array_temp[x - 1][y]) + Weights * (array_temp[x][y + 1] + array_temp[x][y - 1])) + Weights * array_temp[x][y]
 
-    sigma = np.std(array, axis=0)
+    sigma = np.std(array, axis=0)                   #计算权重比
 
-    for i in range(len(x_list)):
+    for i in range(len(x_list)):                    
         x = x_list[i]
         y = y_list[i]
-        if mean[y] == np.nan:
+        if mean[y] == np.nan:                       #排除全nan的情况
             continue
-        elif np.abs(array[x][y] - mean[y]) > (3 * sigma[y]):
+        elif np.abs(array[x][y] - mean[y]) > (3 * sigma[y]):            #校验第一次填充结果偏差度，并对离散值做第二次填充
             array_new = 0.2 * (array_temp[x][y+2] + array_temp[x][y-2] + array_temp[x][y+1] + array_temp[x][y-1] + array_temp[x][y])
             sigma_new = np.abs(array_temp[x][y] - array_new)
             if sigma_new >= 0.1 * array_new:
