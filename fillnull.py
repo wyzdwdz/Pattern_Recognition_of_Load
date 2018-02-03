@@ -72,6 +72,6 @@ for id in b_list:                                   #以'id'为单位填充数�
         if data_ndarray.size is 0:
             data_ndarray = fillnull(array)
         else:
-            data_ndarray = np.concatenate((data_ndarray, fillnull(array)), axis=0)         #调用fillna主函数
+            data_ndarray = np.concatenate((data_ndarray, fillnull(array)), axis=0)         #调用fillnull函数
 
 data_new = DataFrame(data_ndarray, index = data.index, columns = data.columns)
