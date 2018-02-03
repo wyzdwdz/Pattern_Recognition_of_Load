@@ -50,21 +50,21 @@ def fillnull(array):                             #用三次权重比值法填补
     return array
 
 
-data = pd.read_csv('C://Users//wyzdw//Desktop//data_within_null.csv', index_col=['类型', 'ID', '日期'])
+data = pd.read_csv('C://Users//wyzdw//Desktop//data_within_null.csv', index_col=['类型', 'ID', '日期'])        #读取csv
 
 b_list = []
-for a, b, c in list(data.index.values):
+for a, b, c in list(data.index.values):             #导出'id'列表b_list
     if b in b_list:
         continue
     else:
         b_list.append(b)
 
-data_ndarray = np.array([])
+data_ndarray = np.array([])                         
 
-for id in b_list:
+for id in b_list:                                   #以'id'为单位填充数据
     array = data.loc(axis=0)[:, id].values
-    if True not in np.isnan(array):
-        if data_ndarray.size is 0:
+    if True not in np.isnan(array):                 #排除无nan值的情况
+        if data_ndarray.size is 0:                  
             data_ndarray = array
         else:
             data_ndarray = np.concatenate((data_ndarray, array), axis=0)
@@ -72,6 +72,6 @@ for id in b_list:
         if data_ndarray.size is 0:
             data_ndarray = fillnull(array)
         else:
-            data_ndarray = np.concatenate((data_ndarray, fillnull(array)), axis=0)
+            data_ndarray = np.concatenate((data_ndarray, fillnull(array)), axis=0)         #调用fillna主函数
 
 data_new = DataFrame(data_ndarray, index = data.index, columns = data.columns)
