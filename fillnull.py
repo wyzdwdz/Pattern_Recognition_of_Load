@@ -30,7 +30,7 @@ def fillnull(array):                             #用三次权重比值法填补
         elif np.nan in [array_temp[x + 1][y], array_temp[x - 1][y], array_temp[x][y + 1], array_temp[x][y - 1]]:      #排除四周全为nan的情况
             array[x][y] = array_temp[x][y]
         else:                                       #第一次填充
-            array[x][y] = 0.5 * (Weights * (array_temp[x + 1][y] + array_temp[x - 1][y]) + Weights * (array_temp[x][y + 1] + array_temp[x][y - 1])) + Weights * array_temp[x][y]
+            array[x][y] = 0.5 * (Weights * (array_temp[x + 1][y] + array_temp[x - 1][y] + array_temp[x][y + 1] + array_temp[x][y - 1])) + Weights * array_temp[x][y]
 
     sigma = np.std(array, axis=0)                   #计算权重比
 
